@@ -7,6 +7,7 @@ variable "ami_id" {
 variable "instance_type" {
   description = "Type of instance to create"
   type        = string
+  default     = "t2.micro" 
 }
 variable "subnet_id" {
   description = "The ID of the subnet in which to launch the instance"
