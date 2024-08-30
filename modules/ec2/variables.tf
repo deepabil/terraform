@@ -8,13 +8,14 @@ variable "instance_type" {
   description = "Type of instance to create"
   type        = string
 }
-
 variable "subnet_id" {
   description = "The ID of the subnet in which to launch the instance"
   type        = string
+  default     = "default-subnet-id"  # Replace with a default subnet ID or leave empty
 }
 
 variable "security_group_id" {
   description = "The ID of the security group to associate with the instance"
   type        = string
+  default     = "default-security-group-id"  # Replace with a default security group ID or leave empty
 }
