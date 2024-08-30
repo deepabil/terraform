@@ -1,0 +1,45 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up AWS CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y awscli
+
+    - name: Retrieve AWS Secrets
+      id: retrieve-secrets
+      run: |
+        aws secretsmanager get-secret-value --secret-id my-aws-credentials --query SecretString --output text > secrets.json
+        export AWS_ACCESS_KEY_ID=$(jq -r '.access_key_id' secrets.json)
+        export AWS_SECRET_ACCESS_KEY=$(jq -r '.secret_access_key' secrets.json)
+        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0 # Use the desired Terraform version
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      run: terraform plan
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
