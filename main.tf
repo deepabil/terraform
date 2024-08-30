@@ -1,14 +1,4 @@
-data "aws_secretsmanager_secret" "aws_credentials" {
-  name = "terraform-aws-credentials"
-}
 
-data "aws_secretsmanager_secret_version" "aws_credentials_version" {
-  secret_id = data.aws_secretsmanager_secret.aws_credentials.id
-}
-
-locals {
-  credentials = jsondecode(data.aws_secretsmanager_secret_version.aws_credentials_version.secret_string)
-}
 
 provider "aws" {
   region = var.region
