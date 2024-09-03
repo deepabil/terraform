@@ -12,11 +12,11 @@ variable "instance_type" {
 variable "subnet_id" {
   description = "The ID of the subnet in which to launch the instance"
   type        = string
-  default     = null # Replace with a default subnet ID or leave empty
+  default     = "" # Replace with a default subnet ID or leave empty
 }
 
 variable "security_group_id" {
   description = "The ID of the security group to associate with the instance"
   type        = string
-  default     = null   # Replace with a default security group ID or leave empty
+  default     = ""               # Replace with a default security group ID or leave empty
 }
