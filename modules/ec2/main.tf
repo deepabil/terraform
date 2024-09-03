@@ -4,7 +4,7 @@ data "aws_ssm_parameter" "latest_ami" {
 }
 
 resource "aws_instance" "test_instance" {
-  ami                    = var.ami_id
+  ami                    = data.aws_ssm_parameter.latest_ami.value  # Use the fetched AMI ID here
   instance_type          = var.instance_type
   subnet_id              = var.subnet_id
   security_groups = [var.security_group_id]
