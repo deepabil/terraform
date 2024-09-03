@@ -7,7 +7,7 @@ resource "random_string" "bucket_suffix" {
 }
 resource "aws_s3_bucket" "storage_bucket" {
   # Combine base name with a unique suffix to ensure uniqueness
-  bucket = "${var.bucket_base_name}-${random_string.bucket_suffix.result}"
+  bucket = "${var.bucket_name}-${random_string.bucket_suffix.result}"
   tags = {
     Name = "Terraform-S3"
   }
